@@ -29,7 +29,7 @@ public class SendScreen extends Thread {
 			while (true) {
 				BufferedImage image = robot.createScreenCapture(rectangle);
 			  	ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				ImageIO.write(image,"png",baos);
+				ImageIO.write(image,"jpeg",baos);
 				byte[] bytes = baos.toByteArray();
 				System.out.println(bytes.length);
 				output.write(bytes);

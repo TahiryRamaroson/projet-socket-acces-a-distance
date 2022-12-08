@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 public class TheScreen extends JFrame {
     JPanel contenir = new JPanel();
 
-    public TheScreen(int width, int height){
+    public TheScreen(int width, int height) {
 
         this.add(contenir);
 
