@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.DataInputStream;
 import java.io.ObjectInputStream;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -12,10 +12,10 @@ import javax.swing.JPanel;
 public class ReceiveScreen extends Thread {
 
  	JPanel panel;
- 	InputStream input;
+ 	DataInputStream input;
  	Image image;
 
-  	public ReceiveScreen(InputStream in, JPanel pan) {
+  	public ReceiveScreen(DataInputStream in, JPanel pan) {
     	input = in;
     	panel = pan;
     	start();
@@ -27,6 +27,7 @@ public class ReceiveScreen extends Thread {
     	  	while (true) {
     	    	byte[] bytes = new byte[4096 * 4096];
     	    	int count = 0;
+				
 				do {
 					count += input.read(bytes, count, bytes.length - count);
 					System.out.println(count);
@@ -54,11 +55,11 @@ public class ReceiveScreen extends Thread {
 		this.panel = panel;
 	}
 
-	public InputStream getInput() {
+	public DataInputStream getInput() {
 		return input;
 	}
 
-	public void setInput(InputStream input) {
+	public void setInput(DataInputStream input) {
 		this.input = input;
 	}
 

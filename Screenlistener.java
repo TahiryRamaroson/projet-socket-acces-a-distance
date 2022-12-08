@@ -13,10 +13,14 @@ public class Screenlistener implements MouseListener, KeyListener, MouseMotionLi
     PrintWriter writer;
     Socket socket;
     JPanel panel;
+    double clientWidth;
+    double clientHeight;
 
 
-    public Screenlistener(Socket so, JPanel pan){
+    public Screenlistener(Socket so, JPanel pan, double width, double height){
         try {
+            this.setClientHeight(height);
+            this.setClientWidth(width);
             this.setPanel(pan);
             this.setSocket(so);
             this.writer = new PrintWriter(this.getSocket().getOutputStream());
@@ -40,23 +44,29 @@ public class Screenlistener implements MouseListener, KeyListener, MouseMotionLi
 
     @Override
     public void mousePressed(java.awt.event.MouseEvent e) {
+        this.panel.requestFocus();
+        this.panel.setFocusable(true);
         this.writer.println("mousePressed");
         int button = e.getButton();
         int xButton = 16;
         if (button == 3) xButton = 4;
         this.writer.println(xButton);
         this.writer.flush();
+        System.out.println("mousePressed");
         
     }
 
     @Override
     public void mouseReleased(java.awt.event.MouseEvent e) {
+        this.panel.requestFocus();
+        this.panel.setFocusable(true);
         this.writer.println("mouseReleased");
         int button = e.getButton();
         int xButton = 16;
         if (button == 3) xButton = 4;
         this.writer.println(xButton);
         this.writer.flush();
+        System.out.println("mouseReleased");
         
     }
 
@@ -65,27 +75,34 @@ public class Screenlistener implements MouseListener, KeyListener, MouseMotionLi
 
     @Override
     public void mouseMoved(java.awt.event.MouseEvent e) {
+        this.panel.requestFocus();
+        this.panel.setFocusable(true);
         this.writer.println("mouseMoved");
-        this.writer.println(e.getX() * this.getPanel().getWidth() / Toolkit.getDefaultToolkit().getScreenSize().width);
-        this.writer.println(e.getX() * this.getPanel().getWidth() / Toolkit.getDefaultToolkit().getScreenSize().height);
+        this.writer.println(e.getX() * (this.getPanel().getWidth() / (int)this.clientWidth));
+        this.writer.println(e.getY() * (this.getPanel().getHeight() / (int)this.clientHeight));
         this.writer.flush();
+        System.out.println("move");
         
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
+        this.panel.requestFocus();
+        this.panel.setFocusable(true);
         this.writer.println("keyPressed");
         this.writer.println(e.getKeyCode());
         this.writer.flush();
-        
+        System.out.println("keypressed");
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        this.panel.requestFocus();
+        this.panel.setFocusable(true);
         this.writer.println("keyReleased");
         this.writer.println(e.getKeyCode());
         this.writer.flush();
-        
+        System.out.println("keyReleased");
     }
 
     @Override
@@ -114,6 +131,22 @@ public class Screenlistener implements MouseListener, KeyListener, MouseMotionLi
 
     public void setPanel(JPanel panel) {
         this.panel = panel;
+    }
+
+    public double getClientWidth() {
+        return clientWidth;
+    }
+
+    public void setClientWidth(double clientWidth) {
+        this.clientWidth = clientWidth;
+    }
+
+    public double getClientHeight() {
+        return clientHeight;
+    }
+
+    public void setClientHeight(double clientHeight) {
+        this.clientHeight = clientHeight;
     }
 
     

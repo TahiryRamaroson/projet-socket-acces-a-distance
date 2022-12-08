@@ -17,11 +17,28 @@ public class ReceiveEvent extends Thread{
         while (true) {
             try {
                 Robot robot = new Robot();
-                if(this.reader.readLine().equalsIgnoreCase("mousePressed")) robot.mousePress(Integer.parseInt(this.reader.readLine()));
-                if(this.reader.readLine().equalsIgnoreCase("mouseReleased")) robot.mouseRelease(Integer.parseInt(this.reader.readLine()));
-                if(this.reader.readLine().equalsIgnoreCase("mouseMoved")) robot.mouseMove(Integer.parseInt(this.reader.readLine()), Integer.parseInt(this.reader.readLine()));
-                if(this.reader.readLine().equalsIgnoreCase("keyPressed")) robot.keyPress(Integer.parseInt(this.reader.readLine()));
-                if(this.reader.readLine().equalsIgnoreCase("keyReleased")) robot.keyRelease(Integer.parseInt(this.reader.readLine()));
+                if(this.reader.readLine().equalsIgnoreCase("mousePressed")){
+                    double nb = Double.valueOf(this.reader.readLine());
+                    robot.mousePress((int)nb);
+                } 
+                if(this.reader.readLine().equalsIgnoreCase("mouseReleased")){
+                    double nb = Double.valueOf(this.reader.readLine());
+                    robot.mouseRelease((int)nb);
+                } 
+                if(this.reader.readLine().equalsIgnoreCase("mouseMoved")){
+                    double x = Double.valueOf(this.reader.readLine());
+                    double y = Double.valueOf(this.reader.readLine());
+                    robot.mouseMove((int)x, (int)y);
+                }
+                 
+                if(this.reader.readLine().equalsIgnoreCase("keyPressed")){
+                    double nb = Double.valueOf(this.reader.readLine());
+                    robot.keyPress((int)nb);
+                } 
+                if(this.reader.readLine().equalsIgnoreCase("keyReleased")){
+                    double nb = Double.valueOf(this.reader.readLine());
+                    robot.keyRelease((int)nb);
+                } 
             } catch (Exception e) {
                 e.printStackTrace();
             }

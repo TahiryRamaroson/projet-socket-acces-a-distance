@@ -19,7 +19,7 @@ public class Client {
             clientSocket = new Socket("192.168.88.207",9999);
             Robot robot = new Robot();
             SendScreen screen = new SendScreen(clientSocket, robot, rect);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             ReceiveEvent event = new ReceiveEvent(reader);
 
         } catch (Exception e) {

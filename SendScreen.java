@@ -1,11 +1,13 @@
 package client;
 
+import java.awt.*;
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.DataOutputStream;
 import java.net.Socket;
 import javax.imageio.ImageIO;
 
@@ -14,18 +16,25 @@ public class SendScreen extends Thread {
   	Socket socket;
   	Robot robot;
   	Rectangle rectangle;
-  	OutputStream output;
+  	DataOutputStream output;
+	double width;
+	double height;
 
   	public SendScreen(Socket socket, Robot robot, Rectangle rect) {
     	this.socket = socket;
     	this.robot = robot;
     	rectangle = rect;
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setHeight(dimension.getHeight());
+		this.setWidth(dimension.getWidth());
     	start();
   	}
 
   	public void run(){
     	try {
-    	  	output = socket.getOutputStream();
+    	  	output = new DataOutputStream(socket.getOutputStream());
+			output.writeDouble(this.getWidth());
+			output.writeDouble(this.getHeight());
 			while (true) {
 				BufferedImage image = robot.createScreenCapture(rectangle);
 			  	ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -66,11 +75,27 @@ public class SendScreen extends Thread {
 		this.rectangle = rectangle;
 	}
 
-	public OutputStream getOutput() {
+	public DataOutputStream getOutput() {
 		return output;
 	}
 
-	public void setOutput(OutputStream output) {
+	public void setOutput(DataOutputStream output) {
 		this.output = output;
+	}
+
+	public double getWidth() {
+		return width;
+	}
+
+	public void setWidth(double width) {
+		this.width = width;
+	}
+
+	public double getHeight() {
+		return height;
+	}
+
+	public void setHeight(double height) {
+		this.height = height;
 	}
 }
