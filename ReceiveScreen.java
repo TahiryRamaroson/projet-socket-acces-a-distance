@@ -6,6 +6,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.DataInputStream;
 import java.io.ObjectInputStream;
+import java.nio.ByteBuffer;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -23,21 +25,20 @@ public class ReceiveScreen extends Thread {
 
   	public void run() {
     	try {
-    	  	//Read screenshots of the client and then draw them
+			super.run();
+    	
     	  	while (true) {
-    	    	byte[] bytes = new byte[4096 * 4096];
-    	    	int count = 0;
-				
-				do {
-					count += input.read(bytes, count, bytes.length - count);
-					System.out.println(count);
-				} while(!(count > 4 && bytes[count - 2] == (byte) -1 && bytes[count - 1] == (byte) -39));
+    	    	byte[] bytes = new byte[4];
+				this.input.readFully(bytes);
+    	    	int size = ByteBuffer.wrap(bytes).asIntBuffer().get();
+				byte[] finalbyte = new byte[size];
+				int inread = 0;
+				int next = 0;
+				while (inread < size && (next = input.read(finalbyte, inread, size - inread)) > 0) {
+					inread += next;
+				}
 
-    	    	image = ImageIO.read(new ByteArrayInputStream(bytes));
-    	    	image = image.getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_FAST);
-
-    	    	//Draw the received screenshots
-
+    	    	image = ImageIO.read(new ByteArrayInputStream(finalbyte));
     	    	Graphics graphics = panel.getGraphics();
     	    	graphics.drawImage(image, 0, 0, panel.getWidth(), panel.getHeight(), panel);
 				

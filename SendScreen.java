@@ -9,6 +9,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+
 import javax.imageio.ImageIO;
 
 public class SendScreen extends Thread {
@@ -35,15 +37,19 @@ public class SendScreen extends Thread {
     	  	output = new DataOutputStream(socket.getOutputStream());
 			output.writeDouble(this.getWidth());
 			output.writeDouble(this.getHeight());
+
 			while (true) {
 				BufferedImage image = robot.createScreenCapture(rectangle);
 			  	ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				ImageIO.write(image,"jpeg",baos);
-				byte[] bytes = baos.toByteArray();
+				byte[] bytes = ByteBuffer.allocate(4).putInt(baos.size()).array();
 				System.out.println(bytes.length);
 				output.write(bytes);
+				output.write(baos.toByteArray());
+				output.flush();
 			  	Thread.sleep(1);
 		  	}
+			
     	} catch (IOException ex) {
     	  	ex.printStackTrace();
     	} catch (InterruptedException e) {
