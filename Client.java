@@ -15,7 +15,7 @@ public class Client {
             Socket clientSocket;
             Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
             Rectangle rect = new Rectangle(dimension);
-            clientSocket = new Socket("192.168.10.211",9999);
+            clientSocket = new Socket("169.254.124.227",9999);
             Robot robot = new Robot();
             TraitementClient traitement = new TraitementClient(clientSocket, robot, rect);
 

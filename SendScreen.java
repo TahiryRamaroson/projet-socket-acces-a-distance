@@ -43,7 +43,6 @@ public class SendScreen extends Thread {
 			  	ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				ImageIO.write(image,"jpeg",baos);
 				byte[] bytes = ByteBuffer.allocate(4).putInt(baos.size()).array();
-				System.out.println(bytes.length);
 				output.write(bytes);
 				output.write(baos.toByteArray());
 				output.flush();

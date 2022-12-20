@@ -48,9 +48,10 @@ public class Screenlistener implements MouseListener, KeyListener, MouseMotionLi
         this.panel.setFocusable(true);
         this.writer.println("mousePressed");
         int button = e.getButton();
-        int xButton = 16;
-        if (button == 3) xButton = 4;
-        this.writer.println(xButton);
+        System.out.println(e.getButton());
+        int RobotButton = 16;
+        if (button == 3) RobotButton = 4;
+        this.writer.println(RobotButton);
         this.writer.flush();
         System.out.println("mousePressed");
         
@@ -62,9 +63,10 @@ public class Screenlistener implements MouseListener, KeyListener, MouseMotionLi
         this.panel.setFocusable(true);
         this.writer.println("mouseReleased");
         int button = e.getButton();
-        int xButton = 16;
-        if (button == 3) xButton = 4;
-        this.writer.println(xButton);
+        System.out.println(e.getButton());
+        int RobotButton = 16;
+        if (button == 3) RobotButton = 4;
+        this.writer.println(RobotButton);
         this.writer.flush();
         System.out.println("mouseReleased");
         
@@ -78,8 +80,8 @@ public class Screenlistener implements MouseListener, KeyListener, MouseMotionLi
         this.panel.requestFocus();
         this.panel.setFocusable(true);
         this.writer.println("mouseMoved");
-        this.writer.println(e.getX() * (this.getPanel().getWidth() / (int)this.clientWidth));
-        this.writer.println(e.getY() * (this.getPanel().getHeight() / (int)this.clientHeight));
+        this.writer.println(e.getX() * ((int)this.clientWidth) / this.getPanel().getWidth());
+        this.writer.println(e.getY() * ((int)this.clientHeight) / this.getPanel().getHeight());
         this.writer.flush();
         System.out.println("move");
         

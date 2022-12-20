@@ -24,7 +24,7 @@ public class TraitementServer extends Thread{
             DataInputStream input = new DataInputStream(this.getSocket().getInputStream());
             double clientWidth = input.readDouble();
             double clientHeight = input.readDouble();
-            ReceiveScreen receive = new ReceiveScreen(new DataInputStream(this.getSocket().getInputStream()), screen.getContenir());
+            ReceiveScreen receive = new ReceiveScreen(input, screen.getContenir());
             Screenlistener listen = new Screenlistener(this.getSocket(), screen.getContenir(), clientWidth, clientHeight);
         } catch (Exception e) {
             e.printStackTrace();

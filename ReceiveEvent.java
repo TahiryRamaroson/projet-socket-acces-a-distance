@@ -14,9 +14,9 @@ public class ReceiveEvent extends Thread{
     @Override
     public void run() {
         super.run();
-        while (true) {
-            try {
-                Robot robot = new Robot();
+        try {
+            Robot robot = new Robot();
+            while (true) {
                 if(this.reader.readLine().equalsIgnoreCase("mousePressed")){
                     double nb = Double.valueOf(this.reader.readLine());
                     robot.mousePress((int)nb);
@@ -39,9 +39,9 @@ public class ReceiveEvent extends Thread{
                     double nb = Double.valueOf(this.reader.readLine());
                     robot.keyRelease((int)nb);
                 } 
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     } 
 
